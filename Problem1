@@ -1,0 +1,36 @@
+public class Problem1 {
+    public static void main(String[] args){
+        System.out.println("The area of the Runge Function with y = 1/1+25 cut out, before the triangle = " + RungeArea());
+        System.out.println("The area of the triangle to be cut out = " + TriangleArea());
+        System.out.println("The final area = "+ ( RungeArea()- TriangleArea()));
+    }
+
+    public static double RungeArea(){
+      //Uses Monte Carlo method to find the area of the function before the triangle is cut out.
+        double min = -1;
+        double max = 1;
+        double sum=0;
+        double rand;
+        int iterations = 100000000;
+        for(int r = 0; r< iterations; r++){
+            rand = Math.random();
+            sum = sum + evaluate(min+ (max-min)*rand);
+        }
+        sum =  sum*((max-min)/iterations);
+
+        //area of the rectangle underneath the function
+        sum -= 2*(1/26);
+        return sum;
+    }
+//Finds the area of the triangle using the equation A = .5bh
+    public static double TriangleArea(){
+        double base = .7692;
+        double height = (25.0/26.0);
+        return .5 * base * height;
+    }
+//Evaluates the Runge Function
+    public static double evaluate(double num) {
+        double r = 25*Math.pow(num,2);
+        return (1/(1+r));
+    }
+}
